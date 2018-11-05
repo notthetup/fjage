@@ -11,6 +11,7 @@ for full license details.
 package org.arl.fjage.test;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.Random;
 import java.util.logging.*;
@@ -21,7 +22,7 @@ import org.junit.*;
 public class BasicTests {
 
   private static final int TICKS = 100;
-  private static final int DELAY = 1100;
+  private static final int DELAY = 10000;
 
   private Random rnd = new Random();
 
@@ -41,10 +42,10 @@ public class BasicTests {
     platform.start();
     platform.delay(DELAY);
     platform.shutdown();
-    assertTrue(client.bad == 0);
-    assertTrue(client.good == client.requests);
-    assertTrue(client.requests == server.requests);
-    assertTrue(client.nuisance == server.nuisance);
+    assertEquals(client.bad , 0);
+    assertEquals(client.good , client.requests);
+    assertEquals(client.requests , server.requests);
+    assertEquals(client.nuisance , server.nuisance);
   }
 
   @Test
@@ -58,10 +59,10 @@ public class BasicTests {
     platform.start();
     platform.delay(DELAY);
     platform.shutdown();
-    assertTrue(client.bad == 0);
-    assertTrue(client.good == client.requests);
-    assertTrue(client.requests == server.requests);
-    assertTrue(client.nuisance == server.nuisance);
+    assertEquals(client.bad , 0);
+    assertEquals(client.good , client.requests);
+    assertEquals(client.requests , server.requests);
+    assertEquals(client.nuisance , server.nuisance);
   }
 
   @Test
@@ -84,10 +85,10 @@ public class BasicTests {
     assertTrue(slave.canLocateAgent(s));
     platform.delay(DELAY);
     platform.shutdown();
-    assertTrue(client.bad == 0);
-    assertTrue(client.good == client.requests);
-    assertTrue(client.requests == server.requests);
-    assertTrue(client.nuisance == server.nuisance);
+    assertEquals(client.bad , 0);
+    assertEquals(client.good , client.requests);
+    assertEquals(client.requests , server.requests);
+    assertEquals(client.nuisance , server.nuisance);
   }
 
   @Test
@@ -102,10 +103,10 @@ public class BasicTests {
     platform.start();
     platform.delay(DELAY);
     platform.shutdown();
-    assertTrue(client.bad == 0);
-    assertTrue(client.good == client.requests);
-    assertTrue(client.requests == server.requests);
-    assertTrue(client.nuisance == server.nuisance);
+    assertEquals(client.bad , 0);
+    assertEquals(client.good , client.requests);
+    assertEquals(client.requests , server.requests);
+    assertEquals(client.nuisance , server.nuisance);
   }
 
   @Test
@@ -120,10 +121,10 @@ public class BasicTests {
     platform.start();
     platform.delay(DELAY);
     platform.shutdown();
-    assertTrue(client.bad == 0);
-    assertTrue(client.good == client.requests);
-    assertTrue(client.requests == server.requests);
-    assertTrue(client.nuisance == server.nuisance);
+    assertEquals(client.bad , 0);
+    assertEquals(client.good , client.requests);
+    assertEquals(client.requests , server.requests);
+    assertEquals(client.nuisance , server.nuisance);
   }
 
   @Test
@@ -135,21 +136,21 @@ public class BasicTests {
     platform.start();
     Gateway gw = new Gateway("localhost", master.getPort());
     Message rsp = gw.receive(100);
-    assertTrue(rsp == null);
+    assertEquals(rsp , null);
     AgentID s = gw.agentForService("server");
     assertTrue(server.getAgentID().equals(s));
     Message req = new RequestMessage(s);
     gw.send(req);
     rsp = gw.receive(100);
     assertTrue(rsp != null);
-    assertTrue(rsp.getClass() == ResponseMessage.class);
+    assertEquals(rsp.getClass() , ResponseMessage.class);
     req = new RequestMessage(server.getAgentID());
     rsp = gw.request(req, 100);
     assertTrue(rsp != null);
-    assertTrue(rsp.getClass() == ResponseMessage.class);
+    assertEquals(rsp.getClass() , ResponseMessage.class);
     req = new NuisanceMessage(server.getAgentID());
     rsp = gw.request(req, 100);
-    assertTrue(rsp == null);
+    assertEquals(rsp , null);
     gw.shutdown();
     platform.shutdown();
   }
@@ -220,7 +221,7 @@ public class BasicTests {
     platform.delay(tickDelay*ticks+1000);
     platform.shutdown();
     for (int i = 0; i < nAgents; i++)
-      assertTrue("ticks = "+tb[i].getTickCount()+", expected "+ticks, tb[i].getTickCount() == ticks);
+      assertEquals("ticks = "+tb[i].getTickCount()+", expected "+ticks, tb[i].getTickCount() , ticks);
   }
 
   @Test
@@ -232,7 +233,7 @@ public class BasicTests {
     s1.x = 77;
     RequestMessage s2 = container.clone(s1);
     assertTrue(s1 != s2);
-    assertTrue(s1.x == s2.x);
+    assertEquals(s1.x , s2.x);
   }
 
   @Test
@@ -244,7 +245,7 @@ public class BasicTests {
     s1.x = 77;
     RequestMessage s2 = container.clone(s1);
     assertTrue(s1 != s2);
-    assertTrue(s1.x == s2.x);
+    assertEquals(s1.x , s2.x);
   }
 
   private static class RequestMessage extends Message {

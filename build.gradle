@@ -48,6 +48,13 @@ tasks.withType(Javadoc) {
   options.addStringOption('Xdoclint:none', '-quiet')
 }
 
+test {
+  systemProperty "random.testing.seed", new Random().nextInt()
+  testLogging {
+    exceptionFormat = 'full'
+  }
+}
+
 jar {
   manifest {
     attributes 'Build-Owner': System.getenv().USER, 'Build-Timestamp': new Date().format('d-MM-yyyy_HH:mm:ss'), 'Build-Version': version
